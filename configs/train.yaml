@@ -1,0 +1,72 @@
+# configs/train_config.yaml
+
+seed: 42
+
+data:
+  input_path: "data/data_alter.csv"
+  target_column: "Class"
+  drop_columns:
+    - "V1"
+    - "V2"
+    - "V3"
+    - "V4"
+    - "V5"
+    - "V6"
+    - "V7"
+    - "V8"
+    - "V9"
+    - "V10"
+    - "V11"
+    - "V12"
+    - "V13"
+    - "V14"
+    - "V15"
+    - "V16"
+    - "V17"
+    - "V18"
+    - "V19"
+    - "V20"
+    - "V21"
+    - "V22"
+    - "V23"
+    - "V24"
+    - "V25"
+    - "V26"
+    - "V27"
+    - "V28"
+  balance:
+    negative_sample: 50000      # сколько отрицательных объектов брать
+    shuffle: true
+
+split:
+  test_size: 0.2
+  stratify: true
+
+model:
+  type: "CatBoostClassifier"
+  params:
+    depth: 6
+    learning_rate: 0.24131049349308362
+    l2_leaf_reg: 8
+    bagging_temperature: 4.8028789429622005
+    border_count: 128
+    iterations: 2000
+    random_seed: 42
+    early_stopping_rounds: 1000
+    verbose: 0
+
+metrics:
+  - "roc_auc"
+  - "accuracy"
+  - "precision"
+  - "recall"
+  - "f1"
+
+output:
+  latest_dir: "models/latest"
+  archive_dir: "models/archive"
+  save_format: "cbm"
+
+logging:
+  log_path: "logs/train.log"
+  log_level: "INFO"

@@ -1,0 +1,16 @@
+version: "1.0"
+
+services:
+  train:
+    build:
+      context: .
+      dockerfile: train/Dockerfile
+    container_name: ml_train
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models          
+      - ./logs:/app/logs              
+      - ./configs:/app/configs        
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: "no"

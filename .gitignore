@@ -1,0 +1,4 @@
+/.venv
+/catboost_info
+/data/creditcard.csv
+/Inference/__pycache__
