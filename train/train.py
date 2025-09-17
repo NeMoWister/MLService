@@ -44,11 +44,6 @@ def main(config_path: str = None):
     if config_path is None:
         config_path = os.path.join(base_dir, "app", "configs", "train.yaml")
 
-    print(config_path)
-
-    print('_______________________________________________')
-    config = load_config(config_path)
-
     SEED = config["seed"]
     np.random.seed(SEED)
     random.seed(SEED)
