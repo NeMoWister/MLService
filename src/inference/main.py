@@ -4,13 +4,11 @@ from catboost import CatBoostClassifier
 from pydantic import BaseModel
 import uvicorn
 import os
-import yaml
+from dotenv import load_dotenv
 import logging
 
 
-def load_config(path: str = "configs/inference.yaml"):
-    with open(path, "r") as f:
-        return yaml.safe_load(f)
+load_dotenv()
 
 
 def setup_logger(log_path: str, log_level: str = "INFO"):
@@ -25,11 +23,16 @@ def setup_logger(log_path: str, log_level: str = "INFO"):
     )
 
 
+LATEST_DIR = os.getenv("LATEST_DIR", "/app/models/latest")
+LOG_PATH_INFERENCE = os.getenv("LOG_PATH_INFERENCE", "/app/logs/inference.log")
+LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
+HOST = os.getenv("HOST", "0.0.0.0")
+PORT = int(os.getenv("PORT", 8000))
+
+
 app = FastAPI(title="ML Service")
-config = load_config()
 setup_logger(
-    config.get("logging", {}).get("log_path", "logs/service.log"),
-    config.get("logging", {}).get("log_level", "INFO"),
+    LOG_PATH_INFERENCE, LOG_LEVEL
 )
 logger = logging.getLogger(__name__)
 
@@ -122,18 +125,14 @@ async def load_model(request: LoadModelRequest):
 
 
 def start():
-    uvicorn.run(
-        "main:app",
-        host=config["service"]["host"],
-        port=config["service"]["port"],
-        reload=config["service"]["reload"],
-    )
+    uvicorn.run("main:app", host=HOST, port=PORT, reload=True)
+
 
 
 @app.on_event("startup")
 def load_default_model():
     global current_model
-    default_path = config["model"]["default_path"]
+    default_path = LATEST_DIR
     try:
         current_model = ModelWrapper(default_path)
         logger.info(f"Модель по умолчанию {current_model.name} загружена при старте")

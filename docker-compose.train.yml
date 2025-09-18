@@ -4,12 +4,14 @@ services:
   train:
     build:
       context: .
-      dockerfile: train/Dockerfile
+      dockerfile: src/train/Dockerfile
     container_name: ml_train
     volumes:
       - ./models:/app/models          
       - ./logs:/app/logs              
-      - ./configs:/app/configs        
+      - ./.env:/app/.env
+    env_file:
+      - .env
     environment:
       - PYTHONUNBUFFERED=1
     restart: "no"

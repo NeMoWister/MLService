@@ -1,0 +1,28 @@
+2025-09-18 12:37:15,360 - ERROR - Не удалось загрузить модель по умолчанию: В папке /app/models нет .cbm моделей
+2025-09-18 12:37:15,722 - INFO - 3 changes detected
+2025-09-18 12:38:27,005 - INFO - 1 change detected
+2025-09-18 12:38:27,356 - INFO - 1 change detected
+2025-09-18 12:38:50,459 - INFO - 1 change detected
+2025-09-18 12:38:50,983 - INFO - 1 change detected
+2025-09-18 12:38:51,352 - ERROR - Не удалось загрузить модель по умолчанию: В папке /app/models нет .cbm моделей
+2025-09-18 12:38:51,686 - INFO - 1 change detected
+2025-09-18 12:39:06,670 - INFO - Модель 2025-09-18_03-01.cbm загружена из /app/models/latest/2025-09-18_03-01.cbm
+2025-09-18 12:39:06,672 - INFO - Модель по умолчанию 2025-09-18_03-01.cbm загружена при старте
+2025-09-18 12:39:06,955 - INFO - 3 changes detected
+2025-09-18 12:39:07,313 - INFO - 1 change detected
+2025-09-18 12:39:13,454 - INFO - Health-check: модель 2025-09-18_03-01.cbm доступна
+2025-09-18 12:39:13,583 - INFO - 1 change detected
+2025-09-18 12:39:13,935 - INFO - 1 change detected
+2025-09-18 12:39:21,770 - INFO - Модель model_name.cbm загружена из models/archive/model_name.cbm
+2025-09-18 12:39:21,770 - INFO - Загружена новая модель model_name.cbm
+2025-09-18 12:39:21,949 - INFO - 1 change detected
+2025-09-18 12:39:33,484 - INFO - Предсказание: features={'time': 321, 'amount': 421421.0} → 0
+2025-09-18 12:39:33,622 - INFO - 1 change detected
+2025-09-18 12:45:33,516 - INFO - 1 change detected
+2025-09-18 12:45:33,919 - INFO - 1 change detected
+2025-09-18 12:45:37,040 - INFO - Модель 2025-09-18_12-45.cbm загружена из /app/models/latest/2025-09-18_12-45.cbm
+2025-09-18 12:45:37,041 - INFO - Загружена новая модель 2025-09-18_12-45.cbm
+2025-09-18 12:45:37,187 - INFO - 7 changes detected
+2025-09-18 12:45:37,538 - INFO - 1 change detected
+2025-09-18 12:45:57,469 - INFO - Health-check: модель 2025-09-18_12-45.cbm доступна
+2025-09-18 12:45:57,562 - INFO - 1 change detected

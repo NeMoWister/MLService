@@ -2,5 +2,5 @@ catboost
 pandas
 numpy
 scikit-learn
-pyyaml
+python-dotenv
 requests

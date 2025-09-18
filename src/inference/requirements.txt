@@ -2,4 +2,4 @@ catboost
 uvicorn[standard]
 fastapi
 scikit-learn
-pyyaml
+python-dotenv

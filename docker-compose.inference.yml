@@ -4,15 +4,17 @@ services:
   inference:
     build:
       context: .
-      dockerfile: inference/Dockerfile
+      dockerfile: src/inference/Dockerfile
     container_name: ml_inference
     volumes:
       - ./models:/app/models
       - ./logs:/app/logs
-      - ./configs:/app/configs
-      - ./inference:/app/inference
+      - ./.env:/app/.env
+      - ./src/inference:/app/inference
     ports:
       - "8000:8000"
+    env_file:
+      - .env
     environment:
       - PYTHONUNBUFFERED=1
     restart: unless-stopped
