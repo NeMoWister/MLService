@@ -1,5 +1,3 @@
-# train/train.py
-
 import pandas as pd
 import numpy as np
 import random
@@ -8,6 +6,7 @@ import shutil
 import time
 import os
 import yaml
+import requests
 
 from sklearn.model_selection import train_test_split
 from catboost import CatBoostClassifier, Pool
@@ -38,11 +37,12 @@ def setup_logger(log_path: str, log_level: str = "INFO"):
 
 
 def main(config_path: str = None):
-    # print(os.path.dirname(os.path.abspath(__file__)))
-    # time.sleep(10000000)
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     if config_path is None:
         config_path = os.path.join(base_dir, "app", "configs", "train.yaml")
+        # print(config_path)
+
+    config = load_config(config_path)
 
     SEED = config["seed"]
     np.random.seed(SEED)
@@ -82,8 +82,8 @@ def main(config_path: str = None):
         stratify=y if config["split"].get("stratify", False) else None
     )
 
-    train_pool = Pool(X_train, y_train)
-    valid_pool = Pool(X_test, y_test)
+    train_pool = Pool(X_train.values, y_train)
+    valid_pool = Pool(X_test.values, y_test)
 
     model = CatBoostClassifier(**config["model"]["params"])
     model.fit(train_pool, eval_set=valid_pool, use_best_model=True)
@@ -121,6 +121,17 @@ def main(config_path: str = None):
     save_path = os.path.join(latest_dir, f"{timestamp}.{config['output']['save_format']}")
     model.save_model(save_path)
     logging.info(f"Новая модель сохранена в {save_path}")
+
+
+    url = config["output"]["url"]
+    payload = {"model_path": "models/latest"}
+
+    response = requests.post(url, json=payload)
+
+    if response.status_code == 200:
+        print("Модель успешно обновлена:", response.json())
+    else:
+        print("Ошибка при обновлении модели:", response.status_code, response.text)
 
 
 if __name__ == "__main__":

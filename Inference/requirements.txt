@@ -1,5 +1,5 @@
 catboost
-uvicorn
+uvicorn[standard]
 fastapi
 scikit-learn
 pyyaml

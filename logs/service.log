@@ -1,0 +1,105 @@
+2025-09-18 02:15:12,738 - INFO - Модель 2025-09-17_12-29.cbm загружена из models/latest/2025-09-17_12-29.cbm
+2025-09-18 02:15:13,769 - INFO - 2 changes detected
+2025-09-18 02:15:14,122 - INFO - 1 change detected
+2025-09-18 02:15:14,472 - INFO - 1 change detected
+2025-09-18 02:16:31,233 - INFO - Модель 2025-09-17_12-29.cbm загружена из models/latest/2025-09-17_12-29.cbm
+2025-09-18 02:16:58,543 - INFO - 1 change detected
+2025-09-18 02:16:58,895 - INFO - 1 change detected
+2025-09-18 02:16:59,246 - INFO - 1 change detected
+2025-09-18 02:17:15,419 - INFO - Модель 2025-09-17_12-29.cbm загружена из models/latest/2025-09-17_12-29.cbm
+2025-09-18 02:17:16,457 - INFO - 2 changes detected
+2025-09-18 02:17:16,809 - INFO - 1 change detected
+2025-09-18 02:19:25,478 - INFO - Модель 2025-09-17_12-29.cbm загружена из models/latest/2025-09-17_12-29.cbm
+2025-09-18 02:19:26,519 - INFO - 2 changes detected
+2025-09-18 02:19:26,871 - INFO - 1 change detected
+2025-09-18 02:19:27,222 - INFO - 1 change detected
+2025-09-18 02:19:35,531 - WARNING - Health-check: модель не загружена
+2025-09-18 02:19:35,750 - INFO - 1 change detected
+2025-09-18 02:22:04,686 - ERROR - Попытка сделать предсказание без загруженной модели
+2025-09-18 02:22:05,011 - INFO - 1 change detected
+2025-09-18 02:22:09,158 - ERROR - Попытка сделать предсказание без загруженной модели
+2025-09-18 02:22:09,468 - INFO - 1 change detected
+2025-09-18 02:22:37,739 - INFO - Модель 2025-09-17_12-29.cbm загружена из models/latest/2025-09-17_12-29.cbm
+2025-09-18 02:22:46,912 - WARNING - Health-check: модель не загружена
+2025-09-18 02:22:47,082 - INFO - 1 change detected
+2025-09-18 02:24:56,323 - INFO - 1 change detected
+2025-09-18 02:24:56,854 - INFO - 1 change detected
+2025-09-18 02:27:25,956 - INFO - Модель 2025-09-17_12-29.cbm загружена из models/latest/2025-09-17_12-29.cbm
+2025-09-18 02:27:26,990 - INFO - 2 changes detected
+2025-09-18 02:27:27,342 - INFO - 1 change detected
+2025-09-18 02:27:27,692 - INFO - 1 change detected
+2025-09-18 02:27:41,594 - WARNING - Health-check: модель не загружена
+2025-09-18 02:27:41,871 - INFO - 1 change detected
+2025-09-18 02:27:42,221 - INFO - 1 change detected
+2025-09-18 02:28:50,403 - INFO - Модель 2025-09-17_12-29.cbm загружена из models/latest/2025-09-17_12-29.cbm
+2025-09-18 02:28:51,442 - INFO - 2 changes detected
+2025-09-18 02:28:51,794 - INFO - 1 change detected
+2025-09-18 02:28:52,145 - INFO - 1 change detected
+2025-09-18 02:29:00,659 - WARNING - Health-check: модель не загружена
+2025-09-18 02:29:01,005 - INFO - 1 change detected
+2025-09-18 02:30:14,946 - INFO - Модель 2025-09-17_12-29.cbm загружена из models/latest/2025-09-17_12-29.cbm
+2025-09-18 02:30:14,947 - INFO - Модель по умолчанию 2025-09-17_12-29.cbm загружена при старте
+2025-09-18 02:30:15,295 - INFO - 3 changes detected
+2025-09-18 02:30:38,661 - INFO - Health-check: модель 2025-09-17_12-29.cbm доступна
+2025-09-18 02:30:38,843 - INFO - 1 change detected
+2025-09-18 02:30:57,049 - ERROR - Ошибка предсказания: catboost/libs/data/model_dataset_compatibility.cpp:72: Feature Amount is present in model but not in pool.
+Traceback (most recent call last):
+  File "/app/main.py", line 102, in predict
+    result = current_model.predict(request.time, request.amount)
+  File "/app/main.py", line 72, in predict
+    return self.model.predict([[time, amount]])[0]
+  File "/usr/local/lib/python3.10/site-packages/catboost/core.py", line 5307, in predict
+    return self._predict(data, prediction_type, ntree_start, ntree_end, thread_count, verbose, 'predict', task_type)
+  File "/usr/local/lib/python3.10/site-packages/catboost/core.py", line 2623, in _predict
+    predictions = self._base_predict(data, prediction_type, ntree_start, ntree_end, thread_count, verbose, task_type)
+  File "/usr/local/lib/python3.10/site-packages/catboost/core.py", line 1842, in _base_predict
+    return self._object._base_predict(pool, prediction_type, ntree_start, ntree_end, thread_count, verbose, task_type)
+  File "_catboost.pyx", line 5155, in _catboost._CatBoost._base_predict
+  File "_catboost.pyx", line 5162, in _catboost._CatBoost._base_predict
+_catboost.CatBoostError: catboost/libs/data/model_dataset_compatibility.cpp:72: Feature Amount is present in model but not in pool.
+2025-09-18 02:30:57,223 - INFO - 1 change detected
+2025-09-18 02:31:19,058 - ERROR - Ошибка предсказания: catboost/libs/data/model_dataset_compatibility.cpp:72: Feature Amount is present in model but not in pool.
+Traceback (most recent call last):
+  File "/app/main.py", line 102, in predict
+    result = current_model.predict(request.time, request.amount)
+  File "/app/main.py", line 72, in predict
+    return self.model.predict([[time, amount]])[0]
+  File "/usr/local/lib/python3.10/site-packages/catboost/core.py", line 5307, in predict
+    return self._predict(data, prediction_type, ntree_start, ntree_end, thread_count, verbose, 'predict', task_type)
+  File "/usr/local/lib/python3.10/site-packages/catboost/core.py", line 2623, in _predict
+    predictions = self._base_predict(data, prediction_type, ntree_start, ntree_end, thread_count, verbose, task_type)
+  File "/usr/local/lib/python3.10/site-packages/catboost/core.py", line 1842, in _base_predict
+    return self._object._base_predict(pool, prediction_type, ntree_start, ntree_end, thread_count, verbose, task_type)
+  File "_catboost.pyx", line 5155, in _catboost._CatBoost._base_predict
+  File "_catboost.pyx", line 5162, in _catboost._CatBoost._base_predict
+_catboost.CatBoostError: catboost/libs/data/model_dataset_compatibility.cpp:72: Feature Amount is present in model but not in pool.
+2025-09-18 02:31:19,457 - INFO - 1 change detected
+2025-09-18 02:34:45,081 - INFO - Модель model_name.cbm загружена из models/archive/model_name.cbm
+2025-09-18 02:34:45,082 - INFO - Загружена новая модель model_name.cbm
+2025-09-18 02:34:45,401 - INFO - 1 change detected
+2025-09-18 02:34:51,788 - INFO - Предсказание: features={'time': 321, 'amount': 421421.0} → 0
+2025-09-18 02:34:52,061 - INFO - 1 change detected
+2025-09-18 02:34:52,412 - INFO - 1 change detected
+2025-09-18 02:35:10,709 - INFO - 2 changes detected
+2025-09-18 02:35:11,059 - INFO - 1 change detected
+2025-09-18 02:35:12,912 - INFO - 2 changes detected
+2025-09-18 02:35:13,263 - INFO - 1 change detected
+2025-09-18 02:35:13,614 - INFO - 1 change detected
+2025-09-18 02:35:13,965 - INFO - 2 changes detected
+2025-09-18 02:35:14,816 - INFO - 2 changes detected
+2025-09-18 02:35:15,167 - INFO - 1 change detected
+2025-09-18 02:35:15,518 - INFO - 1 change detected
+2025-09-18 02:55:06,407 - INFO - Модель 2025-09-18_02-43.cbm загружена из models/latest/2025-09-18_02-43.cbm
+2025-09-18 02:55:06,433 - INFO - Модель по умолчанию 2025-09-18_02-43.cbm загружена при старте
+2025-09-18 02:55:06,602 - INFO - 3 changes detected
+2025-09-18 02:55:44,443 - INFO - Health-check: модель 2025-09-18_02-43.cbm доступна
+2025-09-18 02:55:44,857 - INFO - 1 change detected
+2025-09-18 02:55:45,208 - INFO - 1 change detected
+2025-09-18 02:56:36,419 - INFO - 1 change detected
+2025-09-18 02:56:36,771 - INFO - 1 change detected
+2025-09-18 02:56:41,350 - INFO - 6 changes detected
+2025-09-18 02:56:41,701 - INFO - 1 change detected
+2025-09-18 02:59:23,757 - INFO - Модель 2025-09-18_02-56.cbm загружена из models/latest/2025-09-18_02-56.cbm
+2025-09-18 02:59:23,758 - INFO - Модель по умолчанию 2025-09-18_02-56.cbm загружена при старте
+2025-09-18 03:01:14,613 - INFO - Модель 2025-09-18_03-01.cbm загружена из models/latest/2025-09-18_03-01.cbm
+2025-09-18 03:01:14,613 - INFO - Загружена новая модель 2025-09-18_03-01.cbm

@@ -1,0 +1,18 @@
+version: "1.0"
+
+services:
+  inference:
+    build:
+      context: .
+      dockerfile: inference/Dockerfile
+    container_name: ml_inference
+    volumes:
+      - ./models:/app/models
+      - ./logs:/app/logs
+      - ./configs:/app/configs
+      - ./inference:/app/inference
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped

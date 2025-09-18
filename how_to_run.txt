@@ -1,3 +1,8 @@
 docker compose -f docker-compose.train.yml build
 
 docker compose -f docker-compose.train.yml up
+
+
+docker compose -f docker-compose.inference.yml build
+
+docker compose -f docker-compose.inference.yml up
