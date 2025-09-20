@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 COPY src/inference/requirements.txt /app/requirements.txt
+COPY src/logger.py /app/logger.py
 RUN pip install --no-cache-dir -r requirements.txt
 COPY src/inference /app
 COPY .env /app/.env

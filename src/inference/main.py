@@ -1,82 +1,25 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from catboost import CatBoostClassifier
-from pydantic import BaseModel
+from pydantic import BaseModel, BaseSettings
 import uvicorn
 import os
 from dotenv import load_dotenv
 import logging
+from logger import setup_logger
+from models import PredictionRequest, PredictionResponse, LoadModelRequest, ModelWrapper
+from config import Settings
 
 
-load_dotenv()
-
-
-def setup_logger(log_path: str, log_level: str = "INFO"):
-    os.makedirs(os.path.dirname(log_path), exist_ok=True)
-    logging.basicConfig(
-        level=getattr(logging, log_level.upper(), logging.INFO),
-        format="%(asctime)s - %(levelname)s - %(message)s",
-        handlers=[
-            logging.FileHandler(log_path),
-            logging.StreamHandler()
-        ]
-    )
-
-
-LATEST_DIR = os.getenv("LATEST_DIR", "/app/models/latest")
-LOG_PATH_INFERENCE = os.getenv("LOG_PATH_INFERENCE", "/app/logs/inference.log")
-LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
-HOST = os.getenv("HOST", "0.0.0.0")
-PORT = int(os.getenv("PORT", 8000))
-
+settings = Settings()
 
 app = FastAPI(title="ML Service")
 setup_logger(
-    LOG_PATH_INFERENCE, LOG_LEVEL
+    settings.LOG_PATH_INFERENCE, settings.LOG_LEVEL
 )
 logger = logging.getLogger(__name__)
 
-
-class PredictionRequest(BaseModel):
-    time: int
-    amount: float
-
-
-class PredictionResponse(BaseModel):
-    predictions: float
-
-
-class LoadModelRequest(BaseModel):
-    model_path: str
-
-
-class ModelWrapper:
-    '''
-    Принимает папку или конкретный файл. в случае, если передана папка берет первую модель. нужно для загрузки модели по дефолту в случае перезапуска
-    '''
-    def __init__(self, path: str):
-        if os.path.isdir(path):
-            files = [f for f in os.listdir(path) if f.endswith(".cbm")]
-            if not files:
-                raise FileNotFoundError(f"В папке {path} нет .cbm моделей")
-            path = os.path.join(path, files[0])
-
-        if not os.path.isfile(path):
-            raise FileNotFoundError(f"Модель {path} не найдена")
-
-        self.model = CatBoostClassifier()
-        self.model.load_model(path)
-        self.model_path = path
-        self.name = os.path.basename(path)
-        logger.info(f"Модель {self.name} загружена из {path}")
-
-
-    def predict(self, time: int, amount: float) -> float:
-        return self.model.predict([[time, amount]])[0]
-
-
 current_model: ModelWrapper | None = None
-
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
@@ -125,14 +68,14 @@ async def load_model(request: LoadModelRequest):
 
 
 def start():
-    uvicorn.run("main:app", host=HOST, port=PORT, reload=True)
+    uvicorn.run("main:app", host=settings.HOST, port=settings.PORT, reload=True)
 
 
 
 @app.on_event("startup")
 def load_default_model():
     global current_model
-    default_path = LATEST_DIR
+    default_path = settings.LATEST_DIR
     try:
         current_model = ModelWrapper(default_path)
         logger.info(f"Модель по умолчанию {current_model.name} загружена при старте")

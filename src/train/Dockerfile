@@ -10,6 +10,9 @@ RUN apt-get update && apt-get install -y \
 
 COPY src/train/requirements.txt /app/requirements.txt
 
+COPY src/logger.py /app/logger.py
+
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY src/train /app
