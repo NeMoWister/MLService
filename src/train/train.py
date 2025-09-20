@@ -7,11 +7,15 @@ import os
 import requests
 import ast
 import logging
+import joblib
 from logger import setup_logger
 
 from sklearn.model_selection import train_test_split
-from catboost import CatBoostClassifier, Pool
 from sklearn.metrics import roc_auc_score, accuracy_score, precision_score, recall_score, f1_score
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import FunctionTransformer
+from catboost import CatBoostClassifier
 
 from config import settings
 
@@ -64,12 +68,18 @@ def main():
     )
 
     model_params = ast.literal_eval(settings.MODEL_PARAMS)
-    model = CatBoostClassifier(**model_params)
-    model.fit(Pool(X_train.values, y_train), eval_set=Pool(X_test.values, y_test), use_best_model=True)
+
+    pipeline = Pipeline([
+        ("imputer", SimpleImputer(strategy="mean")),
+        ("squared", FunctionTransformer(lambda x: np.power(x, 2))),
+        ("model", CatBoostClassifier(**model_params))
+    ])
+
+    pipeline.fit(X_train, y_train)
     logging.info("Модель обучена")
 
-    y_pred = model.predict(X_test)
-    y_proba = model.predict_proba(X_test)[:, 1]
+    y_pred = pipeline.predict(X_test)
+    y_proba = pipeline.predict_proba(X_test)[:, 1]
 
     metrics = {}
     for m in settings.METRICS.split(","):
@@ -97,8 +107,8 @@ def main():
         logging.info(f"Старая модель перемещена в {settings.ARCHIVE_DIR}")
 
     timestamp = time.strftime("%Y-%m-%d_%H-%M", time.localtime())
-    save_path = os.path.join(settings.LATEST_DIR, f"{timestamp}.{settings.SAVE_FORMAT}")
-    model.save_model(save_path)
+    save_path = os.path.join(settings.LATEST_DIR, f"{timestamp}.joblib")
+    joblib.dump(pipeline, save_path)
     logging.info(f"Новая модель сохранена в {save_path}")
 
     if settings.INFERENCE_URL:

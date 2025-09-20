@@ -1,5 +1,7 @@
 from pydantic import BaseModel
-from catboost import CatBoostClassifier
+import joblib
+import pandas as pd
+import os
 
 
 class PredictionRequest(BaseModel):
@@ -17,11 +19,17 @@ class LoadModelRequest(BaseModel):
 
 class ModelWrapper:
     def __init__(self, model_path: str):
+        if os.path.isdir(model_path):
+            files = [f for f in os.listdir(model_path) if f.endswith(".joblib")]
+            if not files:
+                raise ValueError("В директории нет .joblib модели")
+            model_file = sorted(files)[-1]  # берем самую свежую
+            model_path = os.path.join(model_path, model_file)
+
         self.model_path = model_path
-        self.model = CatBoostClassifier()
-        self.model.load_model(model_path)
-        self.name = model_path.split("/")[-1]
+        self.model = joblib.load(model_path)
+        self.name = os.path.basename(model_path)
 
     def predict(self, time: float, amount: float):
-        features = [[time, amount]]
+        features = pd.DataFrame([{"time": time, "amount": amount}])
         return float(self.model.predict(features)[0])
